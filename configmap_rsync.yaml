@@ -13,6 +13,7 @@ data:
     path = /data/share/
     comment = Share
     read only = yes
+    refuse options = c delete
     list = yes
     uid = 1000
     gid = 1000

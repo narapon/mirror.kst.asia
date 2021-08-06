@@ -55,14 +55,3 @@ spec:
     name: http
   selector:
     app: mirror-serve-http
----
-apiVersion: networking.istio.io/v1alpha3
-kind: DestinationRule
-metadata:
-  name: mirror-serve-http
-  namespace: production
-spec:
-  host: mirror-serve-http
-  trafficPolicy:
-    tls:
-      mode: DISABLE

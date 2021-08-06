@@ -23,12 +23,12 @@ spec:
         - containerPort: 873
           name: rsync
         resources:
-            requests:
-              cpu: "200m"
-              memory: "50Mi"
-            limits:
-              cpu: "4"
-              memory: "1000Mi"
+          requests:
+            cpu: "200m"
+            memory: "50Mi"
+          limits:
+            cpu: "4"
+            memory: "1000Mi"
         volumeMounts:
         - name: nfs-mirror-serve-rsync-data
           mountPath: /data/share
@@ -42,7 +42,7 @@ spec:
           name: mirror-serve-rsync-config
       - name: nfs-mirror-serve-rsync-data
         nfs:
-          server: ${NFS_IP}
+          server: 192.168.10.10
           path: /docker_mounts/mirror
 ---
 kind: Service
@@ -57,17 +57,27 @@ spec:
   - port: 873
     targetPort: 873
     protocol: TCP
-    name: http
+    name: rsync-tcp
   selector:
     app: mirror-serve-rsync
 ---
-apiVersion: networking.istio.io/v1alpha3
-kind: DestinationRule
+kind: Service
+apiVersion: v1
 metadata:
-  name: mirror-serve-rsync
+  labels:
+    app: mirror-serve-rsync
+  name: mirror-serve-rsync-lan
   namespace: production
+  annotations:
+    metallb.universe.tf/allow-shared-ip: kst
 spec:
-  host: mirror-serve-rsync
-  trafficPolicy:
-    tls:
-      mode: DISABLE
+  ports:
+  - port: 873
+    targetPort: 873
+    protocol: TCP
+    name: rsync-tcp
+  selector:
+    app: mirror-serve-rsync
+  type: LoadBalancer
+  externalIPs:
+  - ${LB_IP}
