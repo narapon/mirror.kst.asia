@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mirror-serve-http
-  namespace: production
+  namespace: mirror
   labels:
     app: mirror-serve-http
 spec:
@@ -46,7 +46,7 @@ metadata:
   labels:
     app: mirror-serve-http
   name: mirror-serve-http
-  namespace: production
+  namespace: mirror
 spec:
   ports:
   - port: 80
