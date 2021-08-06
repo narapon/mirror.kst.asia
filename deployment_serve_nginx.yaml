@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mirror-serve-http
+  namespace: production
+  labels:
+    app: mirror-serve-http
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mirror-serve-http
+  template:
+    metadata:
+      labels:
+        app: mirror-serve-http
+    spec:
+      containers:
+      - name: mirror-serve-http
+        image: narapon/mirror
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+          name: http
+        resources:
+            requests:
+              cpu: "100m"
+              memory: "50Mi"
+            limits:
+              cpu: "4"
+              memory: "1000Mi"
+        volumeMounts:
+        - name: nfs-mirror
+          mountPath: /usr/share/nginx/html
+      imagePullSecrets:
+      - name: dockersecret
+      volumes:
+      - name: nfs-mirror
+        nfs:
+          server: ${NFS_IP}
+          path: /docker_mounts/mirror
+---
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    app: mirror-serve-http
+  name: mirror-serve-http
+  namespace: production
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  selector:
+    app: mirror-serve-http
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: mirror-serve-http
+  namespace: production
+spec:
+  host: mirror-serve-http
+  trafficPolicy:
+    tls:
+      mode: DISABLE

@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mirror-rsync
+  namespace: production
+  labels:
+    app: mirror-rsync
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mirror-rsync
+  template:
+    metadata:
+      labels:
+        app: mirror-rsync
+    spec:
+      containers:
+      - name: mirror-rsync
+        image: narapon/mirror-rsync:latest
+        imagePullPolicy: Always
+        resources:
+            requests:
+              cpu: "1"
+              memory: "50Mi"
+            limits:
+              cpu: "4"
+              memory: "2000Mi"
+        volumeMounts:
+        - name: nfs-mirror
+          mountPath: /mnt/mirror
+      imagePullSecrets:
+      - name: dockersecret
+      volumes:
+      - name: nfs-mirror
+        nfs:
+          server: ${NFS_IP}
+          path: /docker_mounts/mirror

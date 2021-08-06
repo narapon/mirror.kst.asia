@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mirror-serve-rsync-config
+  namespace: production
+data:
+  rsyncd.conf: |-
+    uid = nobody
+    gid = nobody
+    use chroot = no
+
+    [share]
+    path = /data/share/
+    comment = Share
+    read only = yes
+    list = yes
+    uid = 1000
+    gid = 1000
