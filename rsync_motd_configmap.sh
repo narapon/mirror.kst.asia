@@ -1,0 +1,1 @@
+kubectl create configmap mirror-serve-rsync-motd -n mirror --from-file=mirror-serve/rsync/motd

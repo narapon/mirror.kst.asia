@@ -23,7 +23,7 @@ spec:
         prefix: /
     route:
     - destination:
-        host: mirror-serve-http
+        host: mirror-serve-nginx
         port:
           number: 80
       weight: 100
