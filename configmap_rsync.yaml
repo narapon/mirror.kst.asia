@@ -7,7 +7,8 @@ data:
   rsyncd.conf: |-
     uid = nobody
     gid = nobody
-    use chroot = no
+    use chroot = yes
+    motd file = /tmp/motd
 
     [share]
     path = /data/share/
@@ -15,5 +16,10 @@ data:
     read only = yes
     refuse options = c delete
     list = yes
-    uid = 1000
-    gid = 1000
+
+    [archlinux]
+    path = /data/share/archlinux
+    comment = Share
+    read only = yes
+    refuse options = c delete
+    list = yes

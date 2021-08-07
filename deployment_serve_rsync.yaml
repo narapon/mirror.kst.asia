@@ -30,19 +30,24 @@ spec:
             cpu: "4"
             memory: "1000Mi"
         volumeMounts:
-        - name: nfs-mirror-serve-rsync-data
-          mountPath: /data/share
+        - name: mirror-serve-rsync-motd
+          mountPath: /tmp
         - name: mirror-serve-rsync-config
           mountPath: /config
+        - name: nfs-mirror-serve-rsync-data
+          mountPath: /data/share
       imagePullSecrets:
       - name: dockersecret
       volumes:
+      - name: mirror-serve-rsync-motd
+        configMap:
+          name: mirror-serve-rsync-motd
       - name: mirror-serve-rsync-config
         configMap:
           name: mirror-serve-rsync-config
       - name: nfs-mirror-serve-rsync-data
         nfs:
-          server: ${NFS_IP}
+          server: 192.168.10.10
           path: /docker_mounts/mirror
 ---
 kind: Service
@@ -80,4 +85,4 @@ spec:
     app: mirror-serve-rsync
   type: LoadBalancer
   externalIPs:
-  - ${LB_IP}
+  - 192.168.10.30

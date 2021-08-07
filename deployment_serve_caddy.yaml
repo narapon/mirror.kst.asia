@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mirror-serve-nginx
+  name: mirror-serve-caddy
   namespace: mirror
   labels:
-    app: mirror-serve-nginx
+    app: mirror-serve-caddy
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mirror-serve-nginx
+      app: mirror-serve-caddy
   template:
     metadata:
       labels:
-        app: mirror-serve-nginx
+        app: mirror-serve-caddy
     spec:
       containers:
-      - name: mirror-serve-nginx
+      - name: mirror-serve-caddy
         image: narapon/mirror
         imagePullPolicy: Always
         ports:
@@ -44,8 +44,8 @@ kind: Service
 apiVersion: v1
 metadata:
   labels:
-    app: mirror-serve-nginx
-  name: mirror-serve-nginx
+    app: mirror-serve-caddy
+  name: mirror-serve-caddy
   namespace: mirror
 spec:
   ports:
@@ -54,4 +54,4 @@ spec:
     protocol: TCP
     name: http
   selector:
-    app: mirror-serve-nginx
+    app: mirror-serve-caddy

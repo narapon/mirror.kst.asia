@@ -29,6 +29,8 @@
 0 3 * * * rsync -av --delete pub.linuxmint.com::pub /mnt/mirror/linuxmint-iso >> /proc/1/fd/1 2>&1
 0 3,15 * * * rsync -av --delete rsync-packages.linuxmint.com::packages /mnt/mirror/linuxmint >> /proc/1/fd/1 2>&1
 0 * * * * rsync -av --delete -rlptH --safe-links --delete-delay --delay-updates rsync://mirror.guillaumea.fr/archlinux/ /mnt/mirror/archlinux >> /proc/1/fd/1 2>&1
+0 4,16 * * * RSYNC_PASSWORD=dstuPwd rsync -rtv --delete downstreamtestuser@rsync-mxlinux.org::MX-Linux/ /mnt/mirror/mxlinux-iso >> /proc/1/fd/1 2>&1
+0 4,16 * * * RSYNC_PASSWORD=T1tpw4rstmr rsync -rtv --delete rsuser@iso.mxrepo.com::workspace /mnt/mirror/mxlinux >> /proc/1/fd/1 2>&1
 
 0 0,6,12,18 * * * /usr/bin/ubuarchive >> /proc/1/fd/1 2>&1 
 0 0,6,12,18 * * * /usr/bin/uburelease >> /proc/1/fd/1 2>&1
