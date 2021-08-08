@@ -7,7 +7,7 @@ spec:
   hosts:
   - "mirror.kst.asia"
   gateways:
-  - kst-asia-gateway
+  - production/kst-asia-gateway
   tcp:
   - match:
     - port: 873
