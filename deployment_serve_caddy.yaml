@@ -6,7 +6,7 @@ metadata:
   labels:
     app: mirror-serve-caddy
 spec:
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
       app: mirror-serve-caddy
@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: mirror-serve-caddy
-        image: narapon/mirror
+        image: caddy
         imagePullPolicy: Always
         ports:
         - containerPort: 80
