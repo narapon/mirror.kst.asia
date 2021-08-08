@@ -65,24 +65,3 @@ spec:
     name: rsync-tcp
   selector:
     app: mirror-serve-rsync
----
-kind: Service
-apiVersion: v1
-metadata:
-  labels:
-    app: mirror-serve-rsync
-  name: mirror-serve-rsync-lan
-  namespace: mirror
-  annotations:
-    metallb.universe.tf/allow-shared-ip: kst
-spec:
-  ports:
-  - port: 873
-    targetPort: 873
-    protocol: TCP
-    name: rsync-tcp
-  selector:
-    app: mirror-serve-rsync
-  type: LoadBalancer
-  externalIPs:
-  - 192.168.10.30
