@@ -6,7 +6,7 @@ metadata:
   labels:
     app: mirror-serve-nginx
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: mirror-serve-nginx
