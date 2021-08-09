@@ -29,6 +29,8 @@ spec:
         volumeMounts:
         - name: nfs-mirror
           mountPath: /mnt/mirror
+        - name: nfs-mirror-logs
+          mountPath: /mnt/mirror_logs
       imagePullSecrets:
       - name: dockersecret
       volumes:
@@ -36,3 +38,7 @@ spec:
         nfs:
           server: 192.168.10.10
           path: /docker_mounts/mirror
+      - name: nfs-mirror-logs
+        nfs:
+          server: 192.168.10.10
+          path: /docker_mounts/mirror_logs
