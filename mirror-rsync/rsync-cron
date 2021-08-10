@@ -33,6 +33,8 @@
 0 4,16 * * * RSYNC_PASSWORD=dstuPwd     rsync -av --delete -rlptH --chmod=Du=rwx,Dg=rwx,Do=r,Fu=rw,Fg=rw,Fo=r --safe-links --delete-delay --delay-updates downstreamtestuser@rsync-mxlinux.org::MX-Linux/ /mnt/mirror/mxlinux-iso 2>&1 | tee /proc/1/fd/1 mnt/mirror_logs/mxlinux-iso.log
 0 4,16 * * * RSYNC_PASSWORD=T1tpw4rstmr rsync -av --delete -rlptH --chmod=Du=rwx,Dg=rwx,Do=r,Fu=rw,Fg=rw,Fo=r --safe-links --delete-delay --delay-updates rsuser@iso.mxrepo.com::workspace /mnt/mirror/mxlinux 2>&1 | tee /proc/1/fd/1 /mnt/mirror_logs/mxlinux.log
 
+0 5,17 * * * rsync -av --delete -rlptH --chmod=Du=rwx,Dg=rwx,Do=r,Fu=rw,Fg=rw,Fo=r --safe-links --delete-delay --delay-updates rsync://hkg.mirror.rackspace.com/rocky /mnt/mirror/rocky 2>&1 | tee /proc/1/fd/1 /mnt/mirror_logs/rocky.log
+
 0 0,6,12,18 * * * /usr/bin/ubuarchive | tee /proc/1/fd/1 mnt/mirror_logs/ubuntu-archive.log
 0 0,6,12,18 * * * /usr/bin/uburelease | tee /proc/1/fd/1 mnt/mirror_logs/ubuntu-release.log
 
