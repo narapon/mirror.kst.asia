@@ -26,11 +26,11 @@
 0 0,12 * * * rsync -av --delete -rlptH --chmod=Du=rwx,Dg=rwx,Do=r,Fu=rw,Fg=rw,Fo=r --safe-links --delete-delay --delay-updates cran.r-project.org::CRAN /mnt/mirror/cran 2>&1 | tee /proc/1/fd/1 /mnt/mirror_logs/cran.log
 0 1,13 * * * rsync -av --delete -rlptH --chmod=Du=rwx,Dg=rwx,Do=r,Fu=rw,Fg=rw,Fo=r --safe-links --delete-delay --delay-updates cpan-rsync.perl.org::CPAN /mnt/mirror/cpan 2>&1 | tee /proc/1/fd/1 /mnt/mirror_logs/cpan.log
 0 2,14 * * * rsync -av --delete -rlptH --chmod=Du=rwx,Dg=rwx,Do=r,Fu=rw,Fg=rw,Fo=r --safe-links --delete-delay --delay-updates rsync://rsync.dante.ctan.org/CTAN /mnt/mirror/ctan 2>&1 | tee /proc/1/fd/1 /mnt/mirror_logs/ctan.log
-0 3 * * *    rsync -av --delete -rlptH --chmod=Du=rwx,Dg=rwx,Do=r,Fu=rw,Fg=rw,Fo=r --safe-links --delete-delay --delay-updates pub.linuxmint.com::pub /mnt/mirror/linuxmint-iso 2>&1 | tee /proc/1/fd/1 mnt/mirror_logs/linuxmint-iso.log
+0 3 * * *    rsync -av --delete -rlptH --chmod=Du=rwx,Dg=rwx,Do=r,Fu=rw,Fg=rw,Fo=r --safe-links --delete-delay --delay-updates pub.linuxmint.com::pub /mnt/mirror/linuxmint-iso 2>&1 | tee /proc/1/fd/1 /mnt/mirror_logs/linuxmint-iso.log
 0 3,15 * * * rsync -av --delete -rlptH --chmod=Du=rwx,Dg=rwx,Do=r,Fu=rw,Fg=rw,Fo=r --safe-links --delete-delay --delay-updates rsync-packages.linuxmint.com::packages /mnt/mirror/linuxmint 2>&1 | tee /proc/1/fd/1 /mnt/mirror_logs/linuxmint.log
 0 * * * *    rsync -av --delete -rlptH --chmod=Du=rwx,Dg=rwx,Do=r,Fu=rw,Fg=rw,Fo=r --safe-links --delete-delay --delay-updates rsync://mirror.guillaumea.fr/archlinux/ /mnt/mirror/archlinux 2>&1 | tee /proc/1/fd/1 /mnt/mirror_logs/archlinux.log
 
-0 4,16 * * * RSYNC_PASSWORD=dstuPwd     rsync -av --delete -rlptH --chmod=Du=rwx,Dg=rwx,Do=r,Fu=rw,Fg=rw,Fo=r --safe-links --delete-delay --delay-updates downstreamtestuser@rsync-mxlinux.org::MX-Linux/ /mnt/mirror/mxlinux-iso 2>&1 | tee /proc/1/fd/1 mnt/mirror_logs/mxlinux-iso.log
+0 4,16 * * * RSYNC_PASSWORD=dstuPwd     rsync -av --delete -rlptH --chmod=Du=rwx,Dg=rwx,Do=r,Fu=rw,Fg=rw,Fo=r --safe-links --delete-delay --delay-updates downstreamtestuser@rsync-mxlinux.org::MX-Linux/ /mnt/mirror/mxlinux-iso 2>&1 | tee /proc/1/fd/1 /mnt/mirror_logs/mxlinux-iso.log
 0 4,16 * * * RSYNC_PASSWORD=T1tpw4rstmr rsync -av --delete -rlptH --chmod=Du=rwx,Dg=rwx,Do=r,Fu=rw,Fg=rw,Fo=r --safe-links --delete-delay --delay-updates rsuser@iso.mxrepo.com::workspace /mnt/mirror/mxlinux 2>&1 | tee /proc/1/fd/1 /mnt/mirror_logs/mxlinux.log
 
 0 5,17 * * * rsync -av --delete -rlptH --chmod=Du=rwx,Dg=rwx,Do=r,Fu=rw,Fg=rw,Fo=r --safe-links --delete-delay --delay-updates rsync://msync.rockylinux.org/rocky/mirror/pub/rocky/ /mnt/mirror/rocky 2>&1 | tee /proc/1/fd/1 /mnt/mirror_logs/rocky.log

@@ -9,7 +9,6 @@ Nginx is ran as a webserver, with envoy sitting in front as a reverse proxy.
 
 | [http](http://mirror.kst.asia)  | [https](https://mirror.kst.asia) | [rsync](rsync://mirror.kst.asia) |
 | ------------- | ------------- | ------------- | 
-| :white_check_mark:	 | :white_check_mark:	 | :x: (yea) | 
 
 This mirror is ran on a [MyRepublic](https://myrepublic.net/sg/) 1gbps line, and offers the following packages:
 
