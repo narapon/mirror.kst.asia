@@ -35,6 +35,9 @@
 
 0 5,17 * * * rsync -av --delete -rlptH --chmod=Du=rwx,Dg=rwx,Do=r,Fu=rw,Fg=rw,Fo=r --safe-links --delete-delay --delay-updates rsync://msync.rockylinux.org/rocky/mirror/pub/rocky/ /mnt/mirror/rocky 2>&1 | tee /proc/1/fd/1 /mnt/mirror_logs/rocky.log
 
+0 0 * * * rsync -av --delete -rlptH --chmod=Du=rwx,Dg=rwx,Do=r,Fu=rw,Fg=rw,Fo=r --safe-links --delete-delay --delay-updates rsync://ftp.lyx.org/ftp/pub/lyx/ /mnt/mirror/lyx 2>&1 | tee /proc/1/fd/1 /mnt/mirror_logs/lyx.log
+
+
 0 0,6,12,18 * * * /usr/bin/ubuarchive | tee /proc/1/fd/1 mnt/mirror_logs/ubuntu-archive.log
 0 0,6,12,18 * * * /usr/bin/uburelease | tee /proc/1/fd/1 mnt/mirror_logs/ubuntu-release.log
 
