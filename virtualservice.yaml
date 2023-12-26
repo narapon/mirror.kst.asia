@@ -2,12 +2,13 @@ apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: mirror-serve-nginx
-  namespace: mirror
+  namespace: mirror-sg
 spec:
   hosts:
-  - "mirror.kst.asia"
+  - "mirror.sg"
+  # - "*mirror.sg"
   gateways:
-  - production/kst-asia-gateway
+  - mirror-sg/mirror-sg-gateway
   http:
   - match:
     - uri:
@@ -18,23 +19,23 @@ spec:
         port:
           number: 80
       weight: 100
----
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: mirror-serve-rsync
-  namespace: mirror
-spec:
-  hosts:
-  - "mirror.kst.asia"
-  gateways:
-  - kst-asia-gateway-rsync
-  tcp:
-  - match:
-    - port: 873
-    route:
-    - destination:
-        host: mirror-serve-rsync
-        port:
-          number: 873
-      weight: 100
+# ---
+# apiVersion: networking.istio.io/v1alpha3
+# kind: VirtualService
+# metadata:
+#   name: mirror-serve-rsync
+#   namespace: mirror-sg
+# spec:
+#   hosts:
+#   - "mirror.sg"
+#   gateways:
+#   - mirror-sg-gateway-rsync
+#   tcp:
+#   - match:
+#     - port: 873
+#     route:
+#     - destination:
+#         host: mirror-serve-rsync
+#         port:
+#           number: 873
+#       weight: 100

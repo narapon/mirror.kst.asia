@@ -30,7 +30,7 @@ spec:
       containers:
       - name: mirror-serve-rsync
         image: toendeavour/rsyncd-alpine
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 873
           name: rsync

@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mirror-cron-rsync
-  namespace: mirror
+  namespace: mirror-sg
   labels:
     app: mirror-cron-rsync
 spec:
@@ -14,31 +14,31 @@ spec:
     metadata:
       labels:
         app: mirror-cron-rsync
+      annotations:
+        sidecar.istio.io/inject: "false"
     spec:
       containers:
       - name: mirror-cron-rsync
-        image: narapon/mirror-rsync:latest
-        imagePullPolicy: Always
+        image: narapon/mirror-rsync:2023.9.26
+        imagePullPolicy: IfNotPresent
         resources:
           requests:
             cpu: "1"
             memory: "50Mi"
           limits:
-            cpu: "4"
+            cpu: "6"
             memory: "2000Mi"
         volumeMounts:
-        - name: nfs-mirror
+        - name: longhorn-mirror-1
           mountPath: /mnt/mirror
-        - name: nfs-mirror-logs
+        - name: longhorn-mirror-logs
           mountPath: /mnt/mirror_logs
       imagePullSecrets:
       - name: dockersecret
       volumes:
-      - name: nfs-mirror
-        nfs:
-          server: 192.168.10.10
-          path: /docker_mounts/mirror
-      - name: nfs-mirror-logs
-        nfs:
-          server: 192.168.10.10
-          path: /docker_mounts/mirror_logs
+      - name: longhorn-mirror-1
+        persistentVolumeClaim:
+          claimName: mirror-1-pvc
+      - name: longhorn-mirror-logs
+        persistentVolumeClaim:
+          claimName: mirror-logs-pvc

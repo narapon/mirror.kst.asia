@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mirror-1-pv
+  namespace: mirror-sg
+spec:
+  capacity:
+    storage: 3500Gi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: longhorn
+  csi:
+    driver: driver.longhorn.io
+    fsType: ext4
+    volumeAttributes:
+      numberOfReplicas: '1'
+      staleReplicaTimeout: '2880'
+    volumeHandle: mirror-1
+# ---
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: mirror-2-pv
+#   namespace: mirror-sg
+# spec:
+#   capacity:
+#     storage: 1500Gi
+#   volumeMode: Filesystem
+#   accessModes:
+#   - ReadWriteMany
+#   persistentVolumeReclaimPolicy: Retain
+#   storageClassName: longhorn
+#   csi:
+#     driver: driver.longhorn.io
+#     fsType: ext4
+#     volumeAttributes:
+#       numberOfReplicas: '1'
+#       staleReplicaTimeout: '2880'
+#     volumeHandle: mirror-2
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mirror-logs-pv
+  namespace: mirror-sg
+spec:
+  capacity:
+    storage: 10Gi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: longhorn
+  csi:
+    driver: driver.longhorn.io
+    fsType: ext4
+    volumeAttributes:
+      numberOfReplicas: '1'
+      staleReplicaTimeout: '2880'
+    volumeHandle: mirror-logs

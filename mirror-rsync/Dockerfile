@@ -21,6 +21,10 @@ RUN mkdir -p /mnt/mirror/ubuntu-ports
 
 RUN mkdir -p /var/log/ubumirror
 
+# scripts
+COPY sync.sh /var/run/sync.sh
+RUN chmod +x /var/run/sync.sh
+
 # crontab
 
 # Copy rsync-cron file to the cron.d directory
