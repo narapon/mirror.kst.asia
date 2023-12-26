@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mirror-serve-nginx
-  namespace: mirror
+  namespace: mirror-sg
   labels:
     app: mirror-serve-nginx
 spec:
@@ -14,6 +14,8 @@ spec:
     metadata:
       labels:
         app: mirror-serve-nginx
+      annotations:
+        sidecar.istio.io/inject: "false"
     spec:
       affinity:
         podAntiAffinity:
@@ -30,7 +32,7 @@ spec:
       containers:
       - name: mirror-serve-nginx
         image: narapon/mirror
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
           name: http
@@ -39,18 +41,17 @@ spec:
             cpu: "100m"
             memory: "50Mi"
           limits:
-            cpu: "4"
+            cpu: "6"
             memory: "1000Mi"
         volumeMounts:
-        - name: nfs-mirror
+        - name: longhorn-mirror-1
           mountPath: /usr/share/nginx/html
       imagePullSecrets:
       - name: dockersecret
       volumes:
-      - name: nfs-mirror
-        nfs:
-          server: 192.168.10.10
-          path: /docker_mounts/mirror
+      - name: longhorn-mirror-1
+        persistentVolumeClaim:
+          claimName: mirror-1-pvc
 ---
 kind: Service
 apiVersion: v1
@@ -58,7 +59,7 @@ metadata:
   labels:
     app: mirror-serve-nginx
   name: mirror-serve-nginx
-  namespace: mirror
+  namespace: mirror-sg
 spec:
   ports:
   - port: 80
@@ -67,3 +68,21 @@ spec:
     name: http
   selector:
     app: mirror-serve-nginx
+---
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    app: mirror-serve-nginx
+  name: mirror-serve-nginx-lb
+  namespace: mirror-sg
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  selector:
+    app: mirror-serve-nginx
+  type: LoadBalancer
+  loadBalancerIP: 10.30.0.102
