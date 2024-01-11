@@ -29,16 +29,16 @@ spec:
             cpu: "6"
             memory: "2000Mi"
         volumeMounts:
-        - name: longhorn-mirror-1
+        - name: longhorn-mirror
           mountPath: /mnt/mirror
         - name: longhorn-mirror-logs
           mountPath: /mnt/mirror_logs
       imagePullSecrets:
       - name: dockersecret
       volumes:
-      - name: longhorn-mirror-1
+      - name: longhorn-mirror
         persistentVolumeClaim:
-          claimName: mirror-1-pvc
+          claimName: mirror-pvc
       - name: longhorn-mirror-logs
         persistentVolumeClaim:
           claimName: mirror-logs-pvc
