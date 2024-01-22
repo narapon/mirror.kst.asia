@@ -23,23 +23,23 @@
 #
 # m h  dom mon dow   command
 
-0 0,12 * * * /var/run/sync.sh cran.r-project.org::CRAN /mnt/mirror/cran 2>&1 | tee /proc/1/fd/1 /mnt/mirror_logs/cran.log
-0 1,13 * * * /var/run/sync.sh cpan-rsync.perl.org::CPAN /mnt/mirror/cpan 2>&1 | tee /proc/1/fd/1 /mnt/mirror_logs/cpan.log
-0 2,14 * * * /var/run/sync.sh rsync://rsync.dante.ctan.org/CTAN /mnt/mirror/ctan 2>&1 | tee /proc/1/fd/1 /mnt/mirror_logs/ctan.log
-0 3 * * *    /var/run/sync.sh pub.linuxmint.com::pub /mnt/mirror/linuxmint-iso 2>&1 | tee /proc/1/fd/1 /mnt/mirror_logs/linuxmint-iso.log
-0 3,15 * * * /var/run/sync.sh rsync-packages.linuxmint.com::packages /mnt/mirror/linuxmint 2>&1 | tee /proc/1/fd/1 /mnt/mirror_logs/linuxmint.log
-0 * * * *    /var/run/sync.sh rsync://ossmirror.mycloud.services/linux/archlinux/ /mnt/mirror/archlinux 2>&1 | tee /proc/1/fd/1 /mnt/mirror_logs/archlinux.log
+0 0,12 * * * /var/run/sync.sh job_cran cran.r-project.org::CRAN /mnt/mirror/cran 2>&1 | tee /mnt/mirror_logs/cran.log
+0 1,13 * * * /var/run/sync.sh job_cpan cpan-rsync.perl.org::CPAN /mnt/mirror/cpan 2>&1 | tee /mnt/mirror_logs/cpan.log
+0 2,14 * * * /var/run/sync.sh job_ctan rsync://rsync.dante.ctan.org/CTAN /mnt/mirror/ctan 2>&1 | tee /mnt/mirror_logs/ctan.log
+0 3 * * *    /var/run/sync.sh job_linuxmint_iso pub.linuxmint.com::pub /mnt/mirror/linuxmint-iso 2>&1 | tee /mnt/mirror_logs/linuxmint-iso.log
+0 3,15 * * * /var/run/sync.sh job_linuxmint_pack rsync-packages.linuxmint.com::packages /mnt/mirror/linuxmint 2>&1 | tee /mnt/mirror_logs/linuxmint.log
+0 * * * *    /var/run/sync.sh job_arch rsync://ossmirror.mycloud.services/linux/archlinux/ /mnt/mirror/archlinux 2>&1 | tee /mnt/mirror_logs/archlinux.log
 
-0 * * * *    /var/run/sync.sh asia.rsync.php.net::phpweb /mnt/mirror/php 2>&1 | tee /proc/1/fd/1 /mnt/mirror_logs/php.log
+0 * * * *    /var/run/sync.sh job_php asia.rsync.php.net::phpweb /mnt/mirror/php 2>&1 | tee /mnt/mirror_logs/php.log
 
-0 4,16 * * * RSYNC_PASSWORD=dstuPwd     /var/run/sync.sh downstreamtestuser@rsync-mxlinux.org::MX-Linux/ /mnt/mirror/mxlinux-iso 2>&1 | tee /proc/1/fd/1 /mnt/mirror_logs/mxlinux-iso.log
-0 4,16 * * * RSYNC_PASSWORD=T1tpw4rstmr /var/run/sync.sh rsuser@iso.mxrepo.com::workspace /mnt/mirror/mxlinux 2>&1 | tee /proc/1/fd/1 /mnt/mirror_logs/mxlinux.log
+0 4,16 * * * RSYNC_PASSWORD=dstuPwd     /var/run/sync.sh job_mxlinux downstreamtestuser@rsync-mxlinux.org::MX-Linux/ /mnt/mirror/mxlinux-iso 2>&1 | tee /mnt/mirror_logs/mxlinux-iso.log
+0 4,16 * * * RSYNC_PASSWORD=T1tpw4rstmr /var/run/sync.sh job_mxlinux_iso rsuser@iso.mxrepo.com::workspace /mnt/mirror/mxlinux 2>&1 | tee /mnt/mirror_logs/mxlinux.log
 
-0 5,17 * * * /var/run/sync.sh rsync://msync.rockylinux.org/rocky/mirror/pub/rocky/ /mnt/mirror/rocky 2>&1 | tee /proc/1/fd/1 /mnt/mirror_logs/rocky.log
+0 5,17 * * * /var/run/sync.sh job_rocky rsync://msync.rockylinux.org/rocky/mirror/pub/rocky/ /mnt/mirror/rocky 2>&1 | tee /mnt/mirror_logs/rocky.log
 
-0 0 * * * /var/run/sync.sh rsync://ftp.lyx.org/ftp/pub/lyx/ /mnt/mirror/lyx 2>&1 | tee /proc/1/fd/1 /mnt/mirror_logs/lyx.log
+0 0 * * * /var/run/sync.sh job_lyx rsync://ftp.lyx.org/ftp/pub/lyx/ /mnt/mirror/lyx 2>&1 | tee /mnt/mirror_logs/lyx.log
 
 
-0 0,6,12,18 * * * /usr/bin/ubuarchive | tee /proc/1/fd/1 /mnt/mirror_logs/ubuntu-archive.log
-0 0,6,12,18 * * * /usr/bin/uburelease | tee /proc/1/fd/1 /mnt/mirror_logs/ubuntu-release.log
+0 0,6,12,18 * * * /usr/bin/ubuarchive | tee /mnt/mirror_logs/ubuntu-archive.log
+0 0,6,12,18 * * * /usr/bin/uburelease | tee /mnt/mirror_logs/ubuntu-release.log
 
