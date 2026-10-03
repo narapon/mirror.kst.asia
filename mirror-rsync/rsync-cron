@@ -10,8 +10,8 @@
 0 * * * *    /var/run/sync.sh job_php asia.rsync.php.net::phpweb /mnt/mirror/php
 0 4,16 * * * RSYNC_PASSWORD=dstuPwd     /var/run/sync.sh job_mxlinux downstreamtestuser@rsync-mxlinux.org::MX-Linux/ /mnt/mirror/mxlinux-iso
 0 4,16 * * * RSYNC_PASSWORD=T1tpw4rstmr /var/run/sync.sh job_mxlinux_iso rsuser@iso.mxrepo.com::workspace /mnt/mirror/mxlinux
-# Rocky Linux (x86_64, aarch64 only)
-0 5,17 * * * /var/run/sync.sh job_rocky rsync://msync.rockylinux.org/rocky/mirror/pub/rocky/ /mnt/mirror/rocky --exclude='ppc64le/' --exclude='s390x/' --exclude='riscv64/'
+# Rocky Linux (x86_64, aarch64 only) - 6x/day per Rocky requirements
+0 1,5,9,13,17,21 * * * /var/run/sync.sh job_rocky rsync://msync.rockylinux.org/rocky/mirror/pub/rocky/ /mnt/mirror/rocky --exclude='ppc64le/' --exclude='s390x/' --exclude='riscv64/'
 0 0 * * * /var/run/sync.sh job_lyx rsync://ftp.lyx.org/ftp/pub/lyx/ /mnt/mirror/lyx
 
 # Alpine Linux (x86_64, aarch64 only)
