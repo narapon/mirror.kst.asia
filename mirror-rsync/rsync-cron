@@ -24,5 +24,5 @@
 0 0,6,12,18 * * * flock -n /var/run/ubuarchive.lock /usr/bin/ubuarchive
 0 1,7,13,19 * * * flock -n /var/run/uburelease.lock /usr/bin/uburelease
 
-# Debian (amd64, arm64, all, source only)
-0 2,8,14,20 * * * /var/run/sync.sh job_debian rsync://ftp.au.debian.org/debian/ /mnt/mirror/debian --exclude='*-i386*' --exclude='*-armel*' --exclude='*-armhf*' --exclude='*-mips*' --exclude='*-mipsel*' --exclude='*-mips64el*' --exclude='*-ppc64el*' --exclude='*-s390x*' --exclude='*-riscv64*' --exclude='*-loong64*' --exclude='binary-i386/' --exclude='binary-armel/' --exclude='binary-armhf/' --exclude='binary-mips*/' --exclude='binary-ppc64el/' --exclude='binary-s390x/' --exclude='binary-riscv64/' --exclude='binary-loong64/' --exclude='installer-i386/' --exclude='installer-armel/' --exclude='installer-armhf/' --exclude='installer-mips*/' --exclude='installer-ppc64el/' --exclude='installer-s390x/' --exclude='installer-riscv64/' --exclude='installer-loong64/' --exclude='*_i386.deb' --exclude='*_i386.udeb' --exclude='*_armel.deb' --exclude='*_armhf.deb' --exclude='*_mips*.deb' --exclude='*_ppc64el.deb' --exclude='*_s390x.deb' --exclude='*_riscv64.deb' --exclude='*_loong64.deb'
+# Debian (amd64, arm64, all, source only) - using ftpsync for official mirror compliance
+0 2,8,14,20 * * * LOGNAME=root /opt/ftpsync/bin/ftpsync

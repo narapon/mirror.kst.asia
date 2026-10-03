@@ -17,7 +17,8 @@ spec:
     spec:
       containers:
       - name: mirror-cron-rsync
-        image: narapon/mirror-rsync:2024.01.21.6
+        image: registry.kst.asia/library/mirror-rsync:2026.09.26
+        imagePullPolicy: Always
         volumeMounts:
         - name: mirror-logs
           mountPath: /mnt/mirror

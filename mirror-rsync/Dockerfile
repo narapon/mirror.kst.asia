@@ -8,7 +8,8 @@ RUN apt-get update && \
     ca-certificates \
     htop \
     tmux \
-    cron
+    cron \
+    curl
 
 COPY ubumirror.conf /etc/ubumirror.conf
 # COPY *.sh /
@@ -24,6 +25,15 @@ RUN mkdir -p /var/log/ubumirror
 # scripts
 COPY sync.sh /var/run/sync.sh
 RUN chmod +x /var/run/sync.sh
+
+# Install ftpsync for Debian mirroring
+RUN mkdir -p /opt/ftpsync /var/log/ftpsync /mnt/mirror/debian/project/trace && \
+    curl -sL https://ftp-master.debian.org/ftpsync.tar.gz | tar -xz -C /opt/ftpsync --strip-components=1 && \
+    chmod +x /opt/ftpsync/bin/*
+
+# ftpsync configuration - must be in ${BASEDIR}/etc/ftpsync.conf
+COPY ftpsync.conf /opt/ftpsync/etc/ftpsync.conf
+ENV BASEDIR=/opt/ftpsync
 
 # crontab
 
