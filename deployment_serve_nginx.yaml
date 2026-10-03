@@ -6,7 +6,7 @@ metadata:
   labels:
     app: mirror-serve-nginx
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: mirror-serve-nginx
@@ -44,14 +44,15 @@ spec:
             cpu: "6"
             memory: "1000Mi"
         volumeMounts:
-        - name: longhorn-mirror
+        - name: mirror-data
           mountPath: /usr/share/nginx/html
       imagePullSecrets:
       - name: dockersecret
       volumes:
-      - name: longhorn-mirror
-        persistentVolumeClaim:
-          claimName: mirror-pvc
+      - name: mirror-data
+        hostPath:
+          path: /mnt/k8s-data/mirror
+          type: DirectoryOrCreate
 ---
 kind: Service
 apiVersion: v1
@@ -68,21 +69,3 @@ spec:
     name: http
   selector:
     app: mirror-serve-nginx
----
-kind: Service
-apiVersion: v1
-metadata:
-  labels:
-    app: mirror-serve-nginx
-  name: mirror-serve-nginx-lb
-  namespace: mirror-sg
-spec:
-  ports:
-  - port: 80
-    targetPort: 80
-    protocol: TCP
-    name: http
-  selector:
-    app: mirror-serve-nginx
-  type: LoadBalancer
-  loadBalancerIP: 10.30.0.102

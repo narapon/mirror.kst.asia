@@ -3,8 +3,6 @@ kind: Deployment
 metadata:
   name: mirror-cron-rsync
   namespace: mirror-sg
-  labels:
-    app: mirror-cron-rsync
 spec:
   replicas: 1
   selector:
@@ -20,7 +18,9 @@ spec:
       containers:
       - name: mirror-cron-rsync
         image: narapon/mirror-rsync:2024.01.21.6
-        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - name: mirror-logs
+          mountPath: /mnt/mirror
         resources:
           requests:
             cpu: "1"
@@ -28,17 +28,8 @@ spec:
           limits:
             cpu: "6"
             memory: "2000Mi"
-        volumeMounts:
-        - name: longhorn-mirror
-          mountPath: /mnt/mirror
-        - name: longhorn-mirror-logs
-          mountPath: /mnt/mirror_logs
-      imagePullSecrets:
-      - name: dockersecret
       volumes:
-      - name: longhorn-mirror
-        persistentVolumeClaim:
-          claimName: mirror-pvc
-      - name: longhorn-mirror-logs
-        persistentVolumeClaim:
-          claimName: mirror-logs-pvc
+      - name: mirror-logs
+        hostPath:
+          path: /mnt/k8s-data/mirror
+          type: DirectoryOrCreate

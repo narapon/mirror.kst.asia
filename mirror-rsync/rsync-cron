@@ -1,45 +1,28 @@
 
-# Edit this file to introduce tasks to be run by cron.
-#
-# Each task to run has to be defined through a single line
-# indicating with different fields when the task will be run
-# and what command to run for the task
-#
-# To define the time you can provide concrete values for
-# minute (m), hour (h), day of month (dom), month (mon),
-# and day of week (dow) or use '*' in these fields (for 'any').
-#
-# Notice that tasks will be started based on the cron's system
-# daemon's notion of time and timezones.
-#
-# Output of the crontab jobs (including errors) is sent through
-# email to the user the crontab file belongs to (unless redirected).
-#
-# For example, you can run a backup of all your user accounts
-# at 5 a.m every week with:
-# 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/
-#
-# For more information see the manual pages of crontab(5) and cron(8)
-#
 # m h  dom mon dow   command
 
-0 0,12 * * * /var/run/sync.sh job_cran cran.r-project.org::CRAN /mnt/mirror/cran 2>&1 | tee /mnt/mirror_logs/cran.log
-0 1,13 * * * /var/run/sync.sh job_cpan cpan-rsync.perl.org::CPAN /mnt/mirror/cpan 2>&1 | tee /mnt/mirror_logs/cpan.log
-0 2,14 * * * /var/run/sync.sh job_ctan rsync://rsync.dante.ctan.org/CTAN /mnt/mirror/ctan 2>&1 | tee /mnt/mirror_logs/ctan.log
-0 3 * * *    /var/run/sync.sh job_linuxmint_iso pub.linuxmint.com::pub /mnt/mirror/linuxmint-iso 2>&1 | tee /mnt/mirror_logs/linuxmint-iso.log
-0 3,15 * * * /var/run/sync.sh job_linuxmint_pack rsync-packages.linuxmint.com::packages /mnt/mirror/linuxmint 2>&1 | tee /mnt/mirror_logs/linuxmint.log
-0 * * * *    /var/run/sync.sh job_arch rsync://ossmirror.mycloud.services/linux/archlinux/ /mnt/mirror/archlinux 2>&1 | tee /mnt/mirror_logs/archlinux.log
+0 0,12 * * * /var/run/sync.sh job_cran cran.r-project.org::CRAN /mnt/mirror/cran
+0 1,13 * * * /var/run/sync.sh job_cpan cpan-rsync.perl.org::CPAN /mnt/mirror/cpan
+0 2,14 * * * /var/run/sync.sh job_ctan rsync://rsync.dante.ctan.org/CTAN /mnt/mirror/ctan
+0 3 * * *    /var/run/sync.sh job_linuxmint_iso pub.linuxmint.com::pub /mnt/mirror/linuxmint-iso
+0 3,15 * * * /var/run/sync.sh job_linuxmint_pack rsync-packages.linuxmint.com::packages /mnt/mirror/linuxmint
+0 * * * *    /var/run/sync.sh job_arch rsync://ossmirror.mycloud.services/linux/archlinux/ /mnt/mirror/archlinux
+0 * * * *    /var/run/sync.sh job_php asia.rsync.php.net::phpweb /mnt/mirror/php
+0 4,16 * * * RSYNC_PASSWORD=dstuPwd     /var/run/sync.sh job_mxlinux downstreamtestuser@rsync-mxlinux.org::MX-Linux/ /mnt/mirror/mxlinux-iso
+0 4,16 * * * RSYNC_PASSWORD=T1tpw4rstmr /var/run/sync.sh job_mxlinux_iso rsuser@iso.mxrepo.com::workspace /mnt/mirror/mxlinux
+# Rocky Linux (x86_64, aarch64 only)
+0 5,17 * * * /var/run/sync.sh job_rocky rsync://msync.rockylinux.org/rocky/mirror/pub/rocky/ /mnt/mirror/rocky --exclude='ppc64le/' --exclude='s390x/' --exclude='riscv64/'
+0 0 * * * /var/run/sync.sh job_lyx rsync://ftp.lyx.org/ftp/pub/lyx/ /mnt/mirror/lyx
 
-0 * * * *    /var/run/sync.sh job_php asia.rsync.php.net::phpweb /mnt/mirror/php 2>&1 | tee /mnt/mirror_logs/php.log
+# Alpine Linux (x86_64, aarch64 only)
+0 6,18 * * * /var/run/sync.sh job_alpine rsync://rsync.alpinelinux.org/alpine/ /mnt/mirror/alpine --exclude='x86/' --exclude='armhf/' --exclude='armv7/' --exclude='ppc64le/' --exclude='s390x/' --exclude='riscv64/' --exclude='loongarch64/'
 
-0 4,16 * * * RSYNC_PASSWORD=dstuPwd     /var/run/sync.sh job_mxlinux downstreamtestuser@rsync-mxlinux.org::MX-Linux/ /mnt/mirror/mxlinux-iso 2>&1 | tee /mnt/mirror_logs/mxlinux-iso.log
-0 4,16 * * * RSYNC_PASSWORD=T1tpw4rstmr /var/run/sync.sh job_mxlinux_iso rsuser@iso.mxrepo.com::workspace /mnt/mirror/mxlinux 2>&1 | tee /mnt/mirror_logs/mxlinux.log
+# Rust crates.io index
+0 7,19 * * * /var/run/sync.sh job_crates rsync://static.crates.io/crates.io-index/ /mnt/mirror/crates
 
-0 5,17 * * * /var/run/sync.sh job_rocky rsync://msync.rockylinux.org/rocky/mirror/pub/rocky/ /mnt/mirror/rocky 2>&1 | tee /mnt/mirror_logs/rocky.log
+# Ubuntu (archive + releases, excluding ports) - use flock to prevent overlap
+0 0,6,12,18 * * * flock -n /var/run/ubuarchive.lock /usr/bin/ubuarchive
+0 1,7,13,19 * * * flock -n /var/run/uburelease.lock /usr/bin/uburelease
 
-0 0 * * * /var/run/sync.sh job_lyx rsync://ftp.lyx.org/ftp/pub/lyx/ /mnt/mirror/lyx 2>&1 | tee /mnt/mirror_logs/lyx.log
-
-
-0 0,6,12,18 * * * /usr/bin/ubuarchive | tee /mnt/mirror_logs/ubuntu-archive.log
-0 0,6,12,18 * * * /usr/bin/uburelease | tee /mnt/mirror_logs/ubuntu-release.log
-
+# Debian (amd64, arm64, all, source only)
+0 2,8,14,20 * * * /var/run/sync.sh job_debian rsync://ftp.au.debian.org/debian/ /mnt/mirror/debian --exclude='*-i386*' --exclude='*-armel*' --exclude='*-armhf*' --exclude='*-mips*' --exclude='*-mipsel*' --exclude='*-mips64el*' --exclude='*-ppc64el*' --exclude='*-s390x*' --exclude='*-riscv64*' --exclude='*-loong64*' --exclude='binary-i386/' --exclude='binary-armel/' --exclude='binary-armhf/' --exclude='binary-mips*/' --exclude='binary-ppc64el/' --exclude='binary-s390x/' --exclude='binary-riscv64/' --exclude='binary-loong64/' --exclude='installer-i386/' --exclude='installer-armel/' --exclude='installer-armhf/' --exclude='installer-mips*/' --exclude='installer-ppc64el/' --exclude='installer-s390x/' --exclude='installer-riscv64/' --exclude='installer-loong64/' --exclude='*_i386.deb' --exclude='*_i386.udeb' --exclude='*_armel.deb' --exclude='*_armhf.deb' --exclude='*_mips*.deb' --exclude='*_ppc64el.deb' --exclude='*_s390x.deb' --exclude='*_riscv64.deb' --exclude='*_loong64.deb'

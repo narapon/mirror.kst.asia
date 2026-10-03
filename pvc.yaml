@@ -8,23 +8,9 @@ spec:
   - ReadWriteMany
   resources:
     requests:
-      storage: 2800Gi
+      storage: 3Gi
   volumeName: mirror-pv
   storageClassName: longhorn
-# ---
-# apiVersion: v1
-# kind: PersistentVolumeClaim
-# metadata:
-#   name: mirror-2-pvc
-#   namespace: mirror-sg
-# spec:
-#   accessModes:
-#   - ReadWriteMany
-#   resources:
-#     requests:
-#       storage: 1500Gi
-#   volumeName: mirror-2-pv
-#   storageClassName: longhorn
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
