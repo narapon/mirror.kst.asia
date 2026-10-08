@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: mirror-cron-rsync
-        image: registry.kst.asia/library/mirror-rsync:2026.09.26
+        image: registry.kst.asia/library/mirror-rsync:2026.10.07
         imagePullPolicy: Always
         volumeMounts:
         - name: mirror-logs
@@ -32,5 +32,5 @@ spec:
       volumes:
       - name: mirror-logs
         hostPath:
-          path: /mnt/k8s-data/mirror
-          type: DirectoryOrCreate
+          path: /mnt/mirror/data
+          type: Directory

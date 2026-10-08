@@ -14,8 +14,8 @@
 0 1,5,9,13,17,21 * * * /var/run/sync.sh job_rocky rsync://msync.rockylinux.org/rocky/mirror/pub/rocky/ /mnt/mirror/rocky --exclude='ppc64le/' --exclude='s390x/' --exclude='riscv64/'
 0 0 * * * /var/run/sync.sh job_lyx rsync://ftp.lyx.org/ftp/pub/lyx/ /mnt/mirror/lyx
 
-# Alpine Linux (x86_64, aarch64 only)
-0 6,18 * * * /var/run/sync.sh job_alpine rsync://rsync.alpinelinux.org/alpine/ /mnt/mirror/alpine --exclude='x86/' --exclude='armhf/' --exclude='armv7/' --exclude='ppc64le/' --exclude='s390x/' --exclude='riscv64/' --exclude='loongarch64/'
+# Alpine Linux (x86_64, aarch64 only, v3.18+ only)
+0 6,18 * * * /var/run/sync.sh job_alpine rsync://rsync.alpinelinux.org/alpine/ /mnt/mirror/alpine --exclude='x86/' --exclude='armhf/' --exclude='armv7/' --exclude='ppc64le/' --exclude='s390x/' --exclude='riscv64/' --exclude='loongarch64/' --exclude='v3.0/' --exclude='v3.1/' --exclude='v3.2/' --exclude='v3.3/' --exclude='v3.4/' --exclude='v3.5/' --exclude='v3.6/' --exclude='v3.7/' --exclude='v3.8/' --exclude='v3.9/' --exclude='v3.10/' --exclude='v3.11/' --exclude='v3.12/' --exclude='v3.13/' --exclude='v3.14/' --exclude='v3.15/' --exclude='v3.16/' --exclude='v3.17/'
 
 # Rust crates.io index
 0 7,19 * * * /var/run/sync.sh job_crates rsync://static.crates.io/crates.io-index/ /mnt/mirror/crates
