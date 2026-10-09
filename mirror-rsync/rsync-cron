@@ -6,8 +6,8 @@
 0 2,14 * * * /var/run/sync.sh job_ctan rsync://rsync.dante.ctan.org/CTAN /mnt/mirror/ctan
 0 3 * * *    /var/run/sync.sh job_linuxmint_iso pub.linuxmint.com::pub /mnt/mirror/linuxmint-iso
 0 3,15 * * * /var/run/sync.sh job_linuxmint_pack rsync-packages.linuxmint.com::packages /mnt/mirror/linuxmint
-0 * * * *    /var/run/sync.sh job_arch rsync://ossmirror.mycloud.services/linux/archlinux/ /mnt/mirror/archlinux
-0 * * * *    /var/run/sync.sh job_php asia.rsync.php.net::phpweb /mnt/mirror/php
+17 * * * *   /var/run/sync.sh job_arch rsync://ossmirror.mycloud.services/linux/archlinux/ /mnt/mirror/archlinux
+43 * * * *   /var/run/sync.sh job_php asia.rsync.php.net::phpweb /mnt/mirror/php
 0 4,16 * * * RSYNC_PASSWORD=dstuPwd     /var/run/sync.sh job_mxlinux downstreamtestuser@rsync-mxlinux.org::MX-Linux/ /mnt/mirror/mxlinux-iso
 0 4,16 * * * RSYNC_PASSWORD=T1tpw4rstmr /var/run/sync.sh job_mxlinux_iso rsuser@iso.mxrepo.com::workspace /mnt/mirror/mxlinux
 # Rocky Linux (x86_64, aarch64 only) - 6x/day per Rocky requirements
